@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ProjectX</string>
+
+    <string-array name="LoginType">
+
+        <item>User</item>
+        <item>Hostel Owner</item>
+
+
+    </string-array>
+
+</resources>
