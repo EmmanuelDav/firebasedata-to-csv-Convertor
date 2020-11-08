@@ -12,8 +12,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="40dp">
-        <!--android:background="@mipmap/back_login"-->
+        android:padding="30dp">
 
 
         <EditText
@@ -22,12 +21,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             android:drawablePadding="5dp"
+            android:layout_margin="10dp"
             android:ems="10"
-            android:hint="email"
+            android:hint="email:"
             android:inputType="textEmailAddress"
-            android:paddingLeft="0dp"
-            android:textColor="#000"
-            android:textColorHint="#999" />
+            android:textColor="#000" />
 
         <EditText
             android:id="@+id/password"
@@ -36,13 +34,12 @@
             android:layout_marginTop="10dp"
             android:drawablePadding="5dp"
             android:ems="10"
+            android:layout_margin="10dp"
             android:hint="Password"
             android:inputType="textPassword"
             android:paddingLeft="0dp"
             android:textColor="#000"
-            android:textColorHint="#999"
-
-            />
+            android:textColorHint="#999" />
         <!--        android:drawableLeft="@mipmap/lock"-->
 
 
@@ -51,9 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
             android:layout_marginTop="30dp"
             android:background="@color/colorAccent"
-            android:onClick="checkLogin"
             android:text="SignIn" />
 
         <TextView
@@ -63,8 +60,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
             android:text="New User Signup?"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000" />
+            android:textSize="18dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>
 

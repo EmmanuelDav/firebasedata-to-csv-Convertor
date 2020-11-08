@@ -11,16 +11,29 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="bottom"
-        android:padding="40dp">
+        android:padding="30dp">
 
 
         <EditText
-            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             android:ems="10"
+            android:id="@+id/serialNum"
+            android:hint="Serial Number"
+            android:layout_margin="10dp"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="0dp"
+            android:textColor="#000"
+            android:textColorHint="#999" />
+        <EditText
+            android:id="@+id/namee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
             android:hint="Name"
+            android:layout_margin="10dp"
+
             android:inputType="textEmailAddress"
             android:paddingLeft="0dp"
             android:textColor="#000"
@@ -31,6 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:layout_margin="10dp"
+
             android:hint="Email-id"
             android:inputType="textEmailAddress"
             android:paddingLeft="0dp"
@@ -38,15 +53,48 @@
             android:textColorHint="#999" />
 
         <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:id="@+id/phoneNum"
+            android:ems="10"
+            android:layout_margin="10dp"
+
+            android:hint="Phone Number"
+            android:inputType="textPassword"
+            android:paddingLeft="0dp"
+            android:textColor="#000"
+            android:textColorHint="#999"
+
+            />
+        <EditText
             android:id="@+id/rpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_lock_black_24dp"
             android:drawablePadding="5dp"
             android:ems="10"
+            android:layout_margin="10dp"
+
             android:hint="Retype Password( atleast 6 characters)"
             android:inputType="textPassword"
+            android:paddingLeft="0dp"
+            android:textColor="#000"
+            android:textColorHint="#999"
+
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:id="@+id/mLocation"
+            android:hint="Location :"
+            android:inputType="textPassword"
+            android:layout_margin="10dp"
+
             android:paddingLeft="0dp"
             android:textColor="#000"
             android:textColorHint="#999"
@@ -56,6 +104,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -64,7 +113,7 @@
                 android:padding="5dp"
                 android:text="Type Of User"
                 android:textColor="#000"
-                android:textSize="21sp"/>
+                android:textSize="18sp"/>
 
             <Spinner
                 android:id="@+id/Atype"
@@ -77,10 +126,10 @@
             android:id="@+id/signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="@color/colorAccent"
-            android:onClick="checkLogin"
             android:text="SignUp" />
 
 

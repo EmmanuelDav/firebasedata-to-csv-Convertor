@@ -2,7 +2,6 @@ package com.example.projectx;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,7 +39,6 @@ public class SignIn extends AppCompatActivity {
         signIn = findViewById(R.id.button);
         emailEditText = findViewById(R.id.mail);
         passEditText = findViewById(R.id.password);
-
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +53,6 @@ public class SignIn extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(SignIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                 db.collection("Users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -65,19 +62,21 @@ public class SignIn extends AppCompatActivity {
                                             int x = 0;
                                             for (DocumentSnapshot i : li) {
                                                 String AA = (String) i.get("AccountType");
-                                                String UU = (String) i.get("Username");
+                                                String UU = (String) i.get("email");
                                                 if (UU.equals(email)) {
-                                                    if (AA.equals("Owner")) {
+                                                    if (AA.equals("Admin")) {
                                                         x = 1;
                                                     }
                                                     break;
                                                 }
                                             }
                                             if (x == 0) {
-                                                Intent i1 = new Intent(SignIn.this, MainActivity.class);
+                                                Toast.makeText(SignIn.this, "User SignUp Successful", Toast.LENGTH_SHORT).show();
+
+                                                Intent i1 = new Intent(SignIn.this, UsersActivity.class);
                                                 startActivity(i1);
                                             } else {
-                                                Intent i = new Intent(SignIn.this, Admin.class);
+                                                Intent i = new Intent(SignIn.this, AdminActivity.class);
                                                 i.putExtra("Username", email);
                                                 startActivity(i);
                                                 finish();
@@ -85,18 +84,24 @@ public class SignIn extends AppCompatActivity {
                                         }
                                     }
                                 });
-
                             } else {
                                 Toast.makeText(SignIn.this, "Login Unsuccessful", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
+
                         public void onFailure(@NonNull Exception pE) {
                         }
                     });
 
                 }
+            }
+        });
+        findViewById(R.id.register).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View pView) {
+                startActivity(new Intent(SignIn.this, SignUp.class));
             }
         });
 

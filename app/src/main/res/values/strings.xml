@@ -2,11 +2,54 @@
     <string name="app_name">ProjectX</string>
 
     <string-array name="LoginType">
-
         <item>User</item>
-        <item>Hostel Owner</item>
+        <item>Admin</item>
+    </string-array>
 
-
+    <string-array name="states">
+        <item>Abia state</item>
+        <item>Adamawa</item>
+        <item>Akwa Ibom</item>
+        <item>Anambra state</item>
+        <item>Bauchi state</item>
+        <item>Bayelsa state </item>
+        <item>Benue state</item>
+        <item>Borno state</item>
+        <item>Cross River state</item>
+        <item> Delta state</item>
+        <item> Ebonyi state</item>
+        <item>Ekiti state </item>
+        <item> Enugu state</item>
+        <item> Gombe state</item>
+        <item>Imo state</item>
+        <item> Jigawa state</item>
+        <item> Kaduna state</item>
+        <item> Kano state</item>
+        <item>Katsina state</item>
+        <item> Kebbi state</item>
+        <item>Kogi state</item>
+        <item> Kwara state</item>
+        <item> Lagos state</item>
+        <item> Nasarawa</item>
+        <item>Niger state </item>
+        <item> Ogun state</item>
+        <item> Ondo state</item>
+        <item>Osun state</item>
+        <item> Oyo state</item>
+        <item> Plateau state</item>
+        <item>Rivers State </item>
+        <item> Sokoto State</item>
+        <item>Taraba State</item>
+        <item>Yobe State </item>
+        <item> Zamfara State</item>
+        <item> Territory</item>
+    </string-array>
+    
+    <string-array name="status">
+        <item> Installation Failed</item>
+        <item> Device Returned to Warehouse</item>
+        <item> Device Faulty</item>
+        <item> Installation Successful</item>
     </string-array>
 
 </resources>
