@@ -34,14 +34,19 @@ public class AdminActivity extends AppCompatActivity {
                 List<DocumentSnapshot> li;
                 li = pQueryDocumentSnapshots.getDocuments();
                 if (!pQueryDocumentSnapshots.isEmpty()) {
-                    String name = "", serialN = "", phoneN = "", locationN = "";
+                    String name = "", serialN = "", deviceId = "", state = "", status = "", comment = "", tradeP = "", deviceAltId = "", imei = "", deviceAltEmail = "";
                     for (DocumentSnapshot i : li) {
                         if (i.exists()) {
-                            name = (String) i.get("name");
-                            serialN = (String) i.get("serialNumber");
-                            locationN = (String) i.get("location");
-                            phoneN = (String) i.get("phoneNumber");
-
+                            name = (String) i.get("username");
+                            serialN = (String) i.get("serialNum");
+                            deviceId = (String) i.get("deviceId");
+                            state = (String) i.get("state");
+                            comment = (String) i.get("comment");
+                            tradeP = (String) i.get("tradePartners");
+                            imei = (String) i.get("miMEI");
+                            deviceAltEmail = (String) i.get("device Alt ID");
+                            status = (String) i.get("status");
+                            mDemiClassArrayList.add(new UserInfo(serialN,deviceId,deviceAltEmail,imei,comment,tradeP,state,status,name));
                             mAdapter = new Adapter(AdminActivity.this, mDemiClassArrayList);
                             mRecyclerView.setAdapter(mAdapter);
                         }

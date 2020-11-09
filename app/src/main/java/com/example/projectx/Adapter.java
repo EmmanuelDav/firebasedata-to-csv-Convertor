@@ -32,20 +32,20 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final viewHolder holder, int position) {
         final UserInfo e = entryList.get(position);
-        holder.mName.setText(e.serialNum);
+        holder.mName.setText(e.username);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View pView) {
                 int position = holder.getAdapterPosition();
                 Intent i  = new Intent(context, Details.class);
-                i.putExtra("location",entryList.get(position).location);
                 i.putExtra("serialN",entryList.get(position).serialNum);
-                i.putExtra("phoneN",entryList.get(position).phoneNum);
                 i.putExtra("deviceAltEmail",entryList.get(position).deviceAltEmail);
                 i.putExtra("comment",entryList.get(position).comment);
                 i.putExtra("status",entryList.get(position).status);
                 i.putExtra("state",entryList.get(position).state);
+                i.putExtra("deviceId",entryList.get(position).deviceId);
                 i.putExtra("tradePartners",entryList.get(position).tradePartners);
+                i.putExtra("Ime",entryList.get(position).miMEI);
                 context.startActivity(i);
             }
         });

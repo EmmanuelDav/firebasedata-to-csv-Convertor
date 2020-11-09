@@ -62,6 +62,7 @@ public class UsersActivity extends AppCompatActivity {
                 map.put("tradePartners", tradeP);
                 map.put("status", status);
                 map.put("state", state);
+                map.put("username",username);
                 db.collection("data").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> pTask) {

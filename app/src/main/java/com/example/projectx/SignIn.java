@@ -72,12 +72,12 @@ public class SignIn extends AppCompatActivity {
                                             }
                                             if (x == 0) {
                                                 Toast.makeText(SignIn.this, "User SignUp Successful", Toast.LENGTH_SHORT).show();
-
                                                 Intent i1 = new Intent(SignIn.this, UsersActivity.class);
+                                                i1.putExtra("Username", email);
                                                 startActivity(i1);
+                                                finish();
                                             } else {
                                                 Intent i = new Intent(SignIn.this, AdminActivity.class);
-                                                i.putExtra("Username", email);
                                                 startActivity(i);
                                                 finish();
                                             }

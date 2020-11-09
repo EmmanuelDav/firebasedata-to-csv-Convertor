@@ -11,12 +11,11 @@ public class UserInfo implements Serializable {
     String tradePartners;
     String state;
     String status;
-    String location;
-    String phoneNum;
+    String username;
 
     public UserInfo() {}
 
-    public UserInfo(String pSerialNum, String pDeviceId, String pDeviceAltEmail, String pMiMEI, String pComment, String pTradePartners, String pState, String pStatus,String pLocation,String num) {
+    public UserInfo(String pSerialNum, String pDeviceId, String pDeviceAltEmail, String pMiMEI, String pComment, String pTradePartners, String pState, String pStatus,   String pUsername) {
         serialNum = pSerialNum;
         deviceId = pDeviceId;
         deviceAltEmail = pDeviceAltEmail;
@@ -25,9 +24,6 @@ public class UserInfo implements Serializable {
         tradePartners = pTradePartners;
         state = pState;
         status = pStatus;
-        location = pLocation;
-        phoneNum = num;
+        username = pUsername;
     }
-
-
 }

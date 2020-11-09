@@ -12,7 +12,6 @@ public class Details extends AppCompatActivity {
     TextView mSerialN, mDeviceID, mDeviceAuthEmail, mIMEI, mComments, mTradePartners;
     TextView mState, mStatus;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +30,16 @@ public class Details extends AppCompatActivity {
         String deviceAE = i.getStringExtra("deviceAltEmail");
         String comment = i.getStringExtra("comment");
         String tradeP = i.getStringExtra("tradePartners");
+        String state = i.getStringExtra("state");
+        String status = i.getStringExtra("status");
+        String Ime = i.getStringExtra("Ime");
         mSerialN.setText(serialNum);
         mDeviceAuthEmail.setText(deviceAE);
         mTradePartners.setText(tradeP);
         mComments.setText(comment);
+        mState.setText(state);
+        mState.setText(status);
+        mIMEI.setText(Ime);
         mDeviceID.setText(deviceId);
     }
 }

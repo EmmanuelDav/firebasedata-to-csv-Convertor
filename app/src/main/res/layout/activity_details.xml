@@ -3,82 +3,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
     tools:context=".Details">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:cardCornerRadius="10dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/sn"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Serial Number"
-            android:textSize="18sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/Did"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Device ID"
-            android:textColor="#000"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/sn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Serial Number"
+                android:textSize="18sp" />
 
-
-        <TextView
-            android:id="@+id/dae"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Device Activation email"
-            android:inputType="textEmailAddress"
-            android:textColor="#000"
-            android:textSize="21sp" />
+            <TextView
+                android:id="@+id/Did"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Device ID"
+                android:layout_margin="10dp"
+                android:textSize="18sp" />
 
 
-        <TextView
-            android:id="@+id/IMEI"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="IMEI"
-            android:textColor="#000"
-            android:textSize="21sp" />
-
-        <TextView
-            android:id="@+id/state"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/states"
-            android:textColor="#000"
-            android:textSize="21sp" />
+            <TextView
+                android:id="@+id/dae"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Device Activation email"
+                android:layout_margin="10dp"
+                android:textSize="21sp" />
 
 
-        <TextView
-            android:id="@+id/TP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textColor="#000"
-            android:textSize="21sp" />
+            <TextView
+                android:id="@+id/IMEI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="IMEI"
+                android:layout_margin="10dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:layout_margin="10dp"
+                android:textSize="18sp" />
 
 
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Status"
-            android:textColor="#000"
-            android:textSize="21sp" />
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:layout_margin="10dp"
+                android:textSize="18sp" />
 
 
-        <TextView
-            android:id="@+id/cm"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:inputType="text"
-            android:textColor="#000"
-            android:textSize="21sp" />
+            <TextView
+                android:id="@+id/cm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:layout_margin="10dp"
+                android:textSize="18sp" />
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
