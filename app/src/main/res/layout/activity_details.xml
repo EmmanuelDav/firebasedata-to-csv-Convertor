@@ -2,26 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     tools:context=".Details">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="5dp"
+        android:backgroundTint="#126200EE"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:padding="10dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:text="Kura davis"
+                android:textSize="18sp" />
             <TextView
                 android:id="@+id/sn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:textStyle="bold"
                 android:text="Serial Number"
                 android:textSize="18sp" />
 
@@ -30,6 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Device ID"
+                android:textStyle="bold"
+
                 android:layout_margin="10dp"
                 android:textSize="18sp" />
 
@@ -37,10 +52,11 @@
             <TextView
                 android:id="@+id/dae"
                 android:layout_width="match_parent"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 android:hint="Device Activation email"
                 android:layout_margin="10dp"
-                android:textSize="21sp" />
+                android:textSize="18sp" />
 
 
             <TextView
@@ -48,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="IMEI"
+                android:textStyle="bold"
                 android:layout_margin="10dp"
                 android:textSize="18sp" />
 
@@ -55,6 +72,9 @@
                 android:id="@+id/state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="state"
+                android:textStyle="bold"
+
                 android:layout_margin="10dp"
                 android:textSize="18sp" />
 
@@ -62,7 +82,9 @@
                 android:id="@+id/TP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:text="TradePartners"
+                android:textStyle="bold"
+
                 android:layout_margin="10dp"
                 android:textSize="18sp" />
 
@@ -72,6 +94,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Status"
+                android:textStyle="bold"
+
                 android:layout_margin="10dp"
                 android:textSize="18sp" />
 
@@ -80,7 +104,8 @@
                 android:id="@+id/cm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:text="comments"
+                android:textStyle="bold"
                 android:layout_margin="10dp"
                 android:textSize="18sp" />
 

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
-
     private Context context;
     public List<UserInfo> entryList;
 
@@ -25,30 +24,23 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.activity_listitem, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_details, parent, false);
         return new viewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final viewHolder holder, int position) {
         final UserInfo e = entryList.get(position);
+        holder.mComments.setText("Comment = "+e.comment);
+        holder.mDeviceAuthEmail.setText("Device Authentication Email = "+e.deviceAltEmail);
+        holder.mIMEI.setText("IMEI = "+e.miMEI);
+        holder.mDeviceID.setText("Device ID = "+e.deviceId);
+        holder.mTradePartners.setText("Trade Partners = "+e.tradePartners);
+        holder.mState.setText("State = "+e.state);
+        holder.mStatus.setText("Status = "+e.status);
         holder.mName.setText(e.username);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View pView) {
-                int position = holder.getAdapterPosition();
-                Intent i  = new Intent(context, Details.class);
-                i.putExtra("serialN",entryList.get(position).serialNum);
-                i.putExtra("deviceAltEmail",entryList.get(position).deviceAltEmail);
-                i.putExtra("comment",entryList.get(position).comment);
-                i.putExtra("status",entryList.get(position).status);
-                i.putExtra("state",entryList.get(position).state);
-                i.putExtra("deviceId",entryList.get(position).deviceId);
-                i.putExtra("tradePartners",entryList.get(position).tradePartners);
-                i.putExtra("Ime",entryList.get(position).miMEI);
-                context.startActivity(i);
-            }
-        });
+        holder.mSerialN.setText((position + 1) + ".");
+
     }
 
     @Override
@@ -57,10 +49,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {
-        TextView mName, email;
+        TextView mSerialN, mDeviceID, mDeviceAuthEmail, mIMEI, mComments, mTradePartners;
+        TextView mState, mStatus,mName;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
+            mSerialN = itemView.findViewById(R.id.sn);
+            mDeviceID =itemView. findViewById(R.id.Did);
+            mDeviceAuthEmail = itemView.findViewById(R.id.dae);
+            mIMEI =itemView. findViewById(R.id.IMEI);
+            mComments =itemView. findViewById(R.id.cm);
+            mTradePartners = itemView.findViewById(R.id.TP);
+            mState = itemView.findViewById(R.id.state);
+            mStatus = itemView.findViewById(R.id.status);
             mName = itemView.findViewById(R.id.name);
         }
     }
