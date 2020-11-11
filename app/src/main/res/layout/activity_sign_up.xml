@@ -1,110 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignUp">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Admin Sign in"
+        android:layout_margin="30dp"
+        android:textSize="20dp"
+        android:id="@+id/admin"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_alignParentBottom="true"
         android:gravity="bottom"
-        android:padding="30dp">
+        android:padding="15dp">
 
-
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:ems="10"
-            android:id="@+id/serialNum"
-            android:hint="Serial Number"
-            android:layout_margin="10dp"
-            android:inputType="text"
-            android:paddingLeft="0dp"
-            android:textColor="#000"
-            android:textColorHint="#999" />
-        <EditText
-            android:id="@+id/namee"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/serialNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="50dp"
+                android:ems="10"
+                android:hint="Serial Number"
+                android:inputType="text"
+                android:textColor="#000" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Name"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
 
-            android:inputType="text"
-            android:paddingLeft="0dp"
-            android:textColor="#000"
-            android:textColorHint="#999" />
+            <EditText
+                android:id="@+id/namee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:hint=" Name"
+                android:inputType="text"
+                android:paddingLeft="0dp"
+                android:textColor="#000"
+                android:textColorHint="#999" />
 
-        <EditText
-            android:id="@+id/mail"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
 
-            android:hint="Email-id"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="0dp"
-            android:textColor="#000"
-            android:textColorHint="#999" />
+            <EditText
+                android:id="@+id/mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:hint=" Email-id"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="0dp"
+                android:textColor="#000"
+                android:textColorHint="#999" />
 
-        <EditText
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawablePadding="5dp"
-            android:id="@+id/phoneNum"
-            android:ems="10"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
 
-            android:hint="Phone Number"
-            android:inputType="number"
-            android:paddingLeft="0dp"
-            android:textColor="#000"
-            android:textColorHint="#999"
+            <EditText
+                android:id="@+id/phoneNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint=" Phone Number"
+                android:inputType="number"
+                android:paddingLeft="0dp"
+                android:textColor="#000"
+                android:textColorHint="#999"
 
-            />
-        <EditText
-            android:id="@+id/rpassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawablePadding="5dp"
-            android:ems="10"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
 
-            android:hint="Retype Password( atleast 6 characters)"
-            android:inputType="textPassword"
-            android:paddingLeft="0dp"
-            android:textColor="#000"
-            android:textColorHint="#999"
+            <EditText
+                android:id="@+id/rpassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint=" Retype Password( atleast 6 characters)"
+                android:inputType="textPassword"
+                android:paddingLeft="0dp"
+                android:textColor="#000"
+                android:textColorHint="#999"
 
-            />
-        <EditText
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawablePadding="5dp"
-            android:ems="10"
-            android:id="@+id/mLocation"
-            android:hint="Location :"
-            android:inputType="text"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
 
-            android:paddingLeft="0dp"
-            android:textColor="#000"
-            android:textColorHint="#999"
+            <EditText
+                android:id="@+id/mLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint=" Location :"
+                android:inputType="text"
+                android:paddingLeft="0dp"
+                android:textColor="#000"
+                android:textColorHint="#999"
 
-            />
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
         <!--        android:drawableLeft="@mipmap/lock"-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
+            android:id="@+id/layout"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <TextView
@@ -126,15 +172,15 @@
             android:id="@+id/signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:textColor="#fff"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/gotham"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@color/colorPrimary"
+            android:textAllCaps="true"
             android:text="SignUp" />
-
 
     </LinearLayout>
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>

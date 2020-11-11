@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,15 +25,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
-    EditText mName, mEmail, mPassword,mSerialNum,mPhoneNum,mLocation;
+    EditText mName, mEmail, mPassword, mSerialNum, mPhoneNum, mLocation;
     FirebaseAuth mAuth;
     Button mSignUpButton;
     Spinner mUserSpinner;
+    AlertDialog.Builder builder;
+    boolean isAdmin = false;
+    AlertDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        progressDialog = getDialogProgressBar().create();
+        progressDialog.setCanceledOnTouchOutside(false);
         mName = findViewById(R.id.namee);
         mEmail = findViewById(R.id.mail);
         mPassword = findViewById(R.id.rpassword);
@@ -51,65 +57,119 @@ public class SignUp extends AppCompatActivity {
                 final String phoneN = mPhoneNum.getText().toString();
                 final String location = mLocation.getText().toString();
                 final String seNum = mSerialNum.getText().toString();
-                if (mail.isEmpty() || password.isEmpty() || name.isEmpty()) {
-                    Toast.makeText(SignUp.this, "Blank Field Found", Toast.LENGTH_LONG).show();
-                } else {
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("Users").whereEqualTo("Username", mail).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                            if (task != null) {
-//                                Toast.makeText(SignUp.this, "User Already registered", Toast.LENGTH_SHORT).show();
-//                                Intent i = new Intent(SignUp.this, SignIn.class);
-//                                startActivity(i);
-//                                finish();
-//                            }
-                        }
-                    });
-                    mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> pTask) {
-                            if (pTask.isSuccessful()) {
-                                Toast.makeText(SignUp.this, "User SignUp Successful", Toast.LENGTH_SHORT).show();
-                                String User = "User";
-                                String userType = mUserSpinner.getSelectedItem().toString();
-                                if (userType.equals("Hostel Owner")) {
-                                    User = "Owner";
+                if (!isAdmin) {
+                    progressDialog.show();
+                    if (mail.isEmpty() || password.isEmpty() || name.isEmpty() || phoneN.isEmpty() || location.isEmpty()) {
+                        progressDialog.dismiss();
+                        Toast.makeText(SignUp.this, "Blank Field Found", Toast.LENGTH_LONG).show();
+                    } else {
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("Users").whereEqualTo("Username", mail).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                progressDialog.dismiss();
+                                if (task != null) {
+                                    Toast.makeText(SignUp.this, "User Already registered", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(SignUp.this, SignIn.class);
+                                    startActivity(i);
+                                    finish();
                                 }
-                                Map<String, String> user = new HashMap<>();
-                                user.put("Name", name);
-                                user.put("email", mail);
-                                user.put("AccountType", userType);
-                                user.put("location", location);
-                                user.put("phoneN", phoneN);
-                                user.put("serialNum", seNum);
+                            }
+                        });
+                        mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> pTask) {
+                                if (pTask.isSuccessful()) {
+                                    String User = "User";
+                                    String userType = mUserSpinner.getSelectedItem().toString();
+                                    if (userType.equals("Hostel Owner")) {
+                                        User = "Owner";
+                                    }
+                                    Map<String, String> user = new HashMap<>();
+                                    user.put("Name", name);
+                                    user.put("email", mail);
+                                    user.put("AccountType", "User");
+                                    user.put("location", location);
+                                    user.put("phoneN", phoneN);
+                                    user.put("serialNum", seNum);
+                                    FirebaseFirestore database = FirebaseFirestore.getInstance();
+                                    database.collection("Users").document(name).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(SignUp.this, "User SignUp Successful", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(SignUp.this, SignIn.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(SignUp.this, "User SignUp Unsuccessful No Internet", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception pE) {
+                                progressDialog.dismiss();
+                                Toast.makeText(SignUp.this, "Sign up Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }else {
+                    progressDialog.show();
+                    if (mail.isEmpty() || password.isEmpty()){
+                        progressDialog.dismiss();
+                        Toast.makeText(SignUp.this, "Missing Field Found", Toast.LENGTH_LONG).show();
+                    }else {
+                        mAuth.createUserWithEmailAndPassword(mail,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult pAuthResult) {
                                 FirebaseFirestore database = FirebaseFirestore.getInstance();
-                                database.collection("Users").document(name).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                Map<String, String> user = new HashMap<>();
+                                user.put("email", mail);
+                                user.put("AccountType", "Admin");
+                                database.collection("Users").document(mail).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(SignUp.this, "User SignUp Successful", Toast.LENGTH_SHORT).show();
+                                    public void onSuccess(Void pVoid) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(SignUp.this, "Admin  SignUp Successful", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(SignUp.this, SignIn.class);
                                         startActivity(intent);
                                         finish();
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(SignUp.this, "User SignUp Unsuccessful No Internet", Toast.LENGTH_SHORT).show();
-                                    }
                                 });
                             }
-
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception pE) {
-                            Toast.makeText(SignUp.this, " No Internet", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
+        mSignUpButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View pView) {
+                isAdmin = true;
+                mName.setVisibility(View.GONE);
+                mSerialNum.setVisibility(View.GONE);
+                mPhoneNum.setVisibility(View.GONE);
+                mLocation.setVisibility(View.GONE);
+                findViewById(R.id.admin).setVisibility(View.VISIBLE);
+                findViewById(R.id.layout).setVisibility(View.GONE);
+                return false;
+            }
+        });
+    }
+
+    public AlertDialog.Builder getDialogProgressBar() {
+        if (builder == null) {
+            builder = new AlertDialog.Builder(this);
+            builder.setView(R.layout.dialog);
+        }
+        return builder;
     }
 
 }

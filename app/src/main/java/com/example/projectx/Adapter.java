@@ -32,9 +32,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
     public void onBindViewHolder(@NonNull final viewHolder holder, int position) {
         final UserInfo e = entryList.get(position);
         holder.mComments.setText("Comment = "+e.comment);
-        holder.mDeviceAuthEmail.setText("Device Authentication Email = "+e.deviceAltEmail);
+        holder.mDeviceAuthEmail.setText("Device Alt Email = "+e.deviceAltEmail);
         holder.mIMEI.setText("IMEI = "+e.miMEI);
-        holder.mDeviceID.setText("Device ID = "+e.deviceId);
+        holder.mDeviceID.setText("Device Id = "+e.deviceId);
         holder.mTradePartners.setText("Trade Partners = "+e.tradePartners);
         holder.mState.setText("State = "+e.state);
         holder.mStatus.setText("Status = "+e.status);

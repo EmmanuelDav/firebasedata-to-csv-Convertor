@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -13,6 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -23,11 +29,9 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AdminActivity extends AppCompatActivity {
@@ -37,6 +41,7 @@ public class AdminActivity extends AppCompatActivity {
     FirebaseFirestore mFirebaseFirestore;
     RecyclerView mRecyclerView;
     String csv;
+    DatabaseReference mDatabaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class AdminActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mDemiClassArrayList = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         mFirebaseFirestore = FirebaseFirestore.getInstance();
         csv = (Environment.getExternalStorageDirectory().getAbsoluteFile() + "/tech.csv");
         mFirebaseFirestore.collection("data").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -77,6 +83,7 @@ public class AdminActivity extends AppCompatActivity {
         findViewById(R.id.saveTocsv).setOnClickListener(view -> {
             writeCSVFile(csv, mDemiClassArrayList);
         });
+        populateDataFromFirebase();
     }
 
     public boolean checkLocationPermission() {
@@ -140,4 +147,25 @@ public class AdminActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void populateDataFromFirebase() {
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot sDataSnapshot : snapshot.getChildren()) {
+                    String data = sDataSnapshot.child("TradePartner_Selection").getValue(String.class);
+                }
+                Toast.makeText(AdminActivity.this,"Added",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+      });
+//        mTradePartners.setThreshold(2);
+//        mTradePartners.setAdapter(mAdapter);
+    }
+
+
 }

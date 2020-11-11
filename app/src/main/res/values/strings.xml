@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjectX</string>
+    <string name="app_name">Excel Converter</string>
 
     <string-array name="LoginType">
         <item>User</item>

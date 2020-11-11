@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignIn">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,33 +12,43 @@
         android:orientation="vertical"
         android:padding="30dp">
 
-
-        <EditText
-            android:id="@+id/mail"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:drawablePadding="5dp"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:hint="email:"
-            android:inputType="textEmailAddress"
-            android:textColor="#000" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/password"
+            <EditText
+                android:id="@+id/mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="100dp"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint=" Email:"
+                android:inputType="textEmailAddress"
+                android:textColor="#000" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawablePadding="5dp"
-            android:ems="10"
-            android:layout_margin="10dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingLeft="0dp"
-            android:textColor="#000"
-            android:textColorHint="#999" />
-        <!--        android:drawableLeft="@mipmap/lock"-->
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint=" Password"
+                android:inputType="textPassword"
+                android:paddingLeft="0dp"
+                android:textColor="#000"
+                android:textColorHint="#999" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button
@@ -49,8 +57,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            android:layout_marginTop="30dp"
             android:background="@color/colorAccent"
+            android:fontFamily="@font/gotham"
+            android:layout_marginTop="30dp"
+            android:textColor="#FFFFFF"
             android:text="SignIn" />
 
         <TextView
@@ -60,7 +70,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
             android:text="New User Signup?"
-            android:textSize="18dp"
+            android:fontFamily="@font/calibri"
+            android:textStyle="bold"
+            android:textSize="21dp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>

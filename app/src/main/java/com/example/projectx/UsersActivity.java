@@ -1,9 +1,12 @@
 package com.example.projectx;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -15,6 +18,11 @@ import androidx.cardview.widget.CardView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,9 +30,12 @@ import java.util.HashMap;
 
 public class UsersActivity extends AppCompatActivity {
     String username;
-    EditText mSerialN, mDeviceID, mDeviceAuthEmail, mIMEI, mComments, mTradePartners;
+    EditText mSerialN, mDeviceID, mDeviceAuthEmail, mIMEI, mComments;
+    AutoCompleteTextView mTradePartners;
     Spinner mState, mStatus;
     CardView mSubmitButton;
+    DatabaseReference mDatabaseRef;
+    private ArrayAdapter<String> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +43,18 @@ public class UsersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_users);
         Intent mIntent = getIntent();
         username = (String) mIntent.getSerializableExtra("Username");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         mSerialN = findViewById(R.id.sn);
         mDeviceID = findViewById(R.id.Did);
         mDeviceAuthEmail = findViewById(R.id.dae);
         mIMEI = findViewById(R.id.IMEI);
         mComments = findViewById(R.id.cm);
         mTradePartners = findViewById(R.id.TP);
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item);
         mSubmitButton = findViewById(R.id.SUBMIT);
         mState = findViewById(R.id.state);
         mStatus = findViewById(R.id.status);
+        populateDataFromFirebase();
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View pView) {
@@ -62,7 +76,7 @@ public class UsersActivity extends AppCompatActivity {
                 map.put("tradePartners", tradeP);
                 map.put("status", status);
                 map.put("state", state);
-                map.put("username",username);
+                map.put("username", username);
                 db.collection("data").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> pTask) {
@@ -83,5 +97,44 @@ public class UsersActivity extends AppCompatActivity {
 
             }
         });
+       new MyTask().execute();
     }
+
+    private void populateDataFromFirebase() {
+
+
+    }
+
+    private class MyTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... pVoids) {
+            mDatabaseRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot sDataSnapshot : snapshot.getChildren()) {
+                        String data = sDataSnapshot.child("TradePartner_Selection").getValue(String.class);
+                        mAdapter.add(data);
+                    }
+                    Log.d("TAG","BackGround Thread Active");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void pVoid) {
+            mTradePartners.setThreshold(3);
+            mTradePartners.setAdapter(mAdapter);
+            mTradePartners.setTextSize(18);
+        }
+    }
+
+
 }
