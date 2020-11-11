@@ -60,7 +60,7 @@ public class AdminActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         mFirebaseFirestore = FirebaseFirestore.getInstance();
-        csv = (Environment.getExternalStorageDirectory().getAbsoluteFile() + "/tech.csv");
+        csv = (Environment.getExternalStorageDirectory().getAbsoluteFile() + "/UEMEnrollment.csv");
         mFirebaseFirestore.collection("data").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot pQueryDocumentSnapshots) {
@@ -140,7 +140,7 @@ public class AdminActivity extends AppCompatActivity {
             for (UserInfo aBook : listBooks) {
                 beanWriter.write(aBook, header, processors);
             }
-            Toast.makeText(AdminActivity.this, "File saved in Internal Storage ", Toast.LENGTH_LONG).show();
+            Toast.makeText(AdminActivity.this, "File saved in Internal Storage as UEMEnrollment.csv", Toast.LENGTH_LONG).show();
         } catch (IOException ex) {
             System.err.println("Created Successfully " + ex);
             Toast.makeText(AdminActivity.this, "Failed  ", Toast.LENGTH_LONG).show();
@@ -174,6 +174,13 @@ public class AdminActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return  true;
+    }
+    @Override
+    public void onBackPressed() {
+        Intent sIntent = new Intent(this, ProfileActivity.class);
+        sIntent.putExtra("Username", SignIn.username);
+        finish();
+        super.onBackPressed();
     }
 
 }

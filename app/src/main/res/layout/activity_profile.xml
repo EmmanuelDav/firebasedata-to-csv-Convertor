@@ -42,7 +42,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="Emmanuel David"
+                        android:gravity="center"
+                        android:text="Welcome Admin"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold" />
 
@@ -55,17 +56,6 @@
                         android:layout_below="@+id/username"
                         android:layout_centerHorizontal="true"
                         android:text="emmanuelDavid@gmail.com"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textStyle="normal" />
-                    <TextView
-                        android:id="@+id/mLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        android:layout_below="@+id/username"
-                        android:layout_centerHorizontal="true"
-                        android:text="Abia state"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="normal" />
 
@@ -89,31 +79,6 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/quizscore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:textSize="18sp"
-                    android:text="1"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_below="@+id/quizscore"
-                    android:layout_centerHorizontal="true"
-                    android:text="Today submission"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -135,7 +100,7 @@
                     android:layout_below="@+id/flag_score"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_centerHorizontal="true"
-                    android:text="Total Submission"
+                    android:text="Total Submission of all Users"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -146,14 +111,35 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+
     <Button
         android:layout_width="match_parent"
         android:layout_margin="20dp"
         android:id="@+id/AddItems"
         android:layout_height="wrap_content"
-        android:text="Add Credentials"
+        android:background="@color/colorAccent"
         android:textColor="@color/backGround"
-        android:background="@color/colorAccent"/>
+        android:text="View All Credentials" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Instruction"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/calibri"
+        android:layout_margin="10dp"
+        android:text="the File is saved in your Phone Storage As UEM Enrolment.csv, When you find it you can then open it with Excel "
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

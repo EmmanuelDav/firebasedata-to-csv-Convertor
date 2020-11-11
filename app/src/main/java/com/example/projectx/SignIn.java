@@ -94,7 +94,7 @@ public class SignIn extends AppCompatActivity {
                                                 finish();
                                             } else {
                                                 progressDialog.dismiss();
-                                                Intent i = new Intent(SignIn.this, AdminActivity.class);
+                                                Intent i = new Intent(SignIn.this, ProfileActivity.class);
                                                 startActivity(i);
                                                 finish();
                                             }

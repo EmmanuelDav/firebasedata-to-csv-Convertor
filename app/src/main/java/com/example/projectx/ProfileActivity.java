@@ -33,22 +33,18 @@ public class ProfileActivity extends AppCompatActivity {
         Intent mIntent = getIntent();
         username = (String) mIntent.getSerializableExtra("Username");
         mName = findViewById(R.id.username);
-        totalPushPerUsers = findViewById(R.id.quizscore);
+
         totalPush = findViewById(R.id.flag_score);
         mEmail = findViewById(R.id.email);
-        mLocation = findViewById(R.id.mLocation);
         mFirebaseFirestore = FirebaseFirestore.getInstance();
-        mFirebaseFirestore.collection("Users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        mFirebaseFirestore.collection("Users").document(SignIn.username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot pDocumentSnapshot) {
                 progressDialog.dismiss();
                 if (pDocumentSnapshot != null) {
-                    String name = pDocumentSnapshot.get("Name").toString();
                     String email = pDocumentSnapshot.get("email").toString();
-                    String Location = pDocumentSnapshot.get("location").toString();
                     mEmail.setText(email);
-                    mName.setText(name);
-                    mLocation.setText(Location);
+
                 }
             }
         });
@@ -61,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
                     for (DocumentSnapshot i : li) {
                         String sUsername = (String) i.get("username");
                         String sDate = (String) i.get("Date");
-                        if (sUsername != null && sUsername.matches(username)) {
+                        if (sUsername != null && sUsername.matches(SignIn.username)) {
                             totalPushPerUser += 1;
                             if (sDate != null && sDate.matches(SignIn.date)) {
                                totalPerDay += 1;
@@ -69,16 +65,14 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
                     progressDialog.dismiss();
-                    totalPushPerUsers.setText(String.valueOf(totalPerDay));
                     String data = String.valueOf(li.size());
-                    totalPush.setText(String.valueOf(totalPushPerUser));
+                    totalPush.setText(data);
                 }
 
             }
         });
         findViewById(R.id.AddItems).setOnClickListener(view -> {
-            startActivity(new Intent(this, UsersActivity.class));
-            finish();
+            startActivity(new Intent(this, AdminActivity.class));
         });
     }
 

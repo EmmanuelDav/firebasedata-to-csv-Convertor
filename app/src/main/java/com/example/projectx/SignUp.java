@@ -2,8 +2,6 @@ package com.example.projectx;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -59,67 +56,8 @@ public class SignUp extends AppCompatActivity {
                 final String phoneN = mPhoneNum.getText().toString();
                 final String location = nLocation.getSelectedItem().toString();
                 final String rtPassword = retPasword.getText().toString();
-                if (!isAdmin) {
                     progressDialog.show();
-                    if (mail.isEmpty() || password.isEmpty() || name.isEmpty() || phoneN.isEmpty() || location.isEmpty() || rtPassword.isEmpty()) {
-                        progressDialog.dismiss();
-                        Toast.makeText(SignUp.this, "Blank Field Found", Toast.LENGTH_LONG).show();
-                    } else if (!password.equals(rtPassword)){
-                        progressDialog.dismiss();
-                        Toast.makeText(SignUp.this, "passwords Don't Match", Toast.LENGTH_LONG).show();
-                    }else {
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        db.collection("Users").whereEqualTo("Username", mail).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                progressDialog.dismiss();
-                                if (task != null) {
-                                    Toast.makeText(SignUp.this, "User Already registered", Toast.LENGTH_SHORT).show();
-                                    Intent i = new Intent(SignUp.this, SignIn.class);
-                                    startActivity(i);
-                                    finish();
-                                }
-                            }
-                        });
-                        mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> pTask) {
-                                if (pTask.isSuccessful()) {
-                                    Map<String, String> user = new HashMap<>();
-                                    user.put("Name", name);
-                                    user.put("email", mail);
-                                    user.put("AccountType", "User");
-                                    user.put("location", location);
-                                    user.put("phoneN", phoneN);
-                                    FirebaseFirestore database = FirebaseFirestore.getInstance();
-                                    database.collection("Users").document(mail).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(SignUp.this, "User SignUp Successful", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(SignUp.this, SignIn.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(SignUp.this, "User SignUp Unsuccessful No Internet", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception pE) {
-                                progressDialog.dismiss();
-                                Toast.makeText(SignUp.this, "Sign up Failed", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }else {
+                {
                     progressDialog.show();
                     if (mail.isEmpty() || password.isEmpty()){
                         progressDialog.dismiss();
@@ -146,18 +84,7 @@ public class SignUp extends AppCompatActivity {
                         });
                     }
                 }
-            }
-        });
-        mSignUpButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View pView) {
-                isAdmin = true;
-                mName.setVisibility(View.GONE);
-                mPhoneNum.setVisibility(View.GONE);
-                mLocation.setVisibility(View.GONE);
-                findViewById(R.id.admin).setVisibility(View.VISIBLE);
-                findViewById(R.id.layout).setVisibility(View.GONE);
-                return false;
+
             }
         });
     }
