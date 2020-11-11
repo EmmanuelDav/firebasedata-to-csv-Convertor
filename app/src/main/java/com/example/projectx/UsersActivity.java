@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -37,6 +38,8 @@ public class UsersActivity extends AppCompatActivity {
     AutoCompleteTextView mTradePartners;
     Spinner mState, mStatus;
     CardView mSubmitButton;
+    AlertDialog.Builder builder;
+    AlertDialog progressDialog;
     DatabaseReference mDatabaseRef;
     private ArrayAdapter<String> mAdapter;
 
@@ -46,6 +49,8 @@ public class UsersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_users);
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        progressDialog = getDialogProgressBar().create();
+        progressDialog.setCanceledOnTouchOutside(false);
         Intent mIntent = getIntent();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         mSerialN = findViewById(R.id.sn);
@@ -62,6 +67,7 @@ public class UsersActivity extends AppCompatActivity {
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View pView) {
+                progressDialog.show();
                 String serialNum = mSerialN.getText().toString();
                 String deviceId = mDeviceID.getText().toString();
                 String deviceAE = mDeviceAuthEmail.getText().toString();
@@ -88,6 +94,7 @@ public class UsersActivity extends AppCompatActivity {
                     db.collection("data").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> pTask) {
+                            progressDialog.dismiss();
                             mSerialN.setText("");
                             mDeviceID.setText("");
                             mDeviceAuthEmail.setText("");
@@ -156,6 +163,11 @@ public class UsersActivity extends AppCompatActivity {
                 finish();
                 break;
 
+            case R.id.profileA:
+                Intent sIntent = new Intent(this, ProfileActivity.class);
+                sIntent.putExtra("Username", SignIn.username);
+                startActivity(sIntent);
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -170,7 +182,15 @@ public class UsersActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent sIntent = new Intent(this, ProfileActivity.class);
         sIntent.putExtra("Username", SignIn.username);
+        startActivity(sIntent);
         finish();
-        super.onBackPressed();
     }
+    public AlertDialog.Builder getDialogProgressBar() {
+        if (builder == null) {
+            builder = new AlertDialog.Builder(this);
+            builder.setView(R.layout.dialog);
+        }
+        return builder;
+    }
+
 }

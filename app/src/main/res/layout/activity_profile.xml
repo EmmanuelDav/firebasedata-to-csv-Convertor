@@ -42,7 +42,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="Emmanuel David"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold" />
 
@@ -54,7 +54,7 @@
                         android:singleLine="true"
                         android:layout_below="@+id/username"
                         android:layout_centerHorizontal="true"
-                        android:text="emmanuelDavid@gmail.com"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="normal" />
                     <TextView
@@ -65,7 +65,7 @@
                         android:singleLine="true"
                         android:layout_below="@+id/username"
                         android:layout_centerHorizontal="true"
-                        android:text="Abia state"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="normal" />
 
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:textSize="18sp"
-                    android:text="1"
+                    android:text="0"
                     android:textStyle="bold" />
 
                 <TextView
@@ -126,7 +126,7 @@
                     android:textSize="18sp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="12"
+                    android:text="0"
                     android:textStyle="bold" />
 
                 <TextView

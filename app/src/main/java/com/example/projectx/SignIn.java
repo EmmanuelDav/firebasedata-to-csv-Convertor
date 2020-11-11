@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -37,6 +38,22 @@ public class SignIn extends AppCompatActivity {
     FirebaseAuth fb;
     public static String username;
     public static String date;
+    FirebaseUser mFirebaseUser;
+    Date myDate;
+
+    @Override
+    protected void onStart() {
+        myDate = new Date();
+        date = (new SimpleDateFormat("MM-dd-yyyy").format(myDate));
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mFirebaseUser != null) {
+            Intent mIntent = new Intent(this, ProfileActivity.class);
+            mIntent.putExtra("Username", mFirebaseUser.getEmail());
+            Log.d("TAG","email ="+mFirebaseUser.getEmail());
+            startActivity(mIntent);
+        }
+        super.onStart();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +74,6 @@ public class SignIn extends AppCompatActivity {
                 email = emailEditText.getText().toString().trim();
                 password = passEditText.getText().toString().trim();
                 username = email;
-                Date myDate = new Date();
-                date = (new SimpleDateFormat("MM-dd-yyyy").format(myDate));
                 final FirebaseFirestore db = FirebaseFirestore.getInstance();
                 if (email.length() == 0 || password.length() == 0) {
                     Toast.makeText(SignIn.this, "Login fields cannot be empty", Toast.LENGTH_SHORT).show();
@@ -87,16 +102,13 @@ public class SignIn extends AppCompatActivity {
                                             }
                                             if (x == 0) {
                                                 progressDialog.dismiss();
-                                                Toast.makeText(SignIn.this, "User SignUp Successful", Toast.LENGTH_SHORT).show();
                                                 Intent i1 = new Intent(SignIn.this, ProfileActivity.class);
                                                 i1.putExtra("Username", email);
                                                 startActivity(i1);
                                                 finish();
                                             } else {
                                                 progressDialog.dismiss();
-                                                Intent i = new Intent(SignIn.this, AdminActivity.class);
-                                                startActivity(i);
-                                                finish();
+                                                Toast.makeText(SignIn.this,"Please Log in via an Admin app",Toast.LENGTH_LONG).show();
                                             }
                                         }
                                     }

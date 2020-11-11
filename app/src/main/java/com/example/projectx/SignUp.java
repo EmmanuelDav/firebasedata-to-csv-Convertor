@@ -69,18 +69,6 @@ public class SignUp extends AppCompatActivity {
                         Toast.makeText(SignUp.this, "passwords Don't Match", Toast.LENGTH_LONG).show();
                     }else {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        db.collection("Users").whereEqualTo("Username", mail).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                progressDialog.dismiss();
-                                if (task != null) {
-                                    Toast.makeText(SignUp.this, "User Already registered", Toast.LENGTH_SHORT).show();
-                                    Intent i = new Intent(SignUp.this, SignIn.class);
-                                    startActivity(i);
-                                    finish();
-                                }
-                            }
-                        });
                         mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> pTask) {
