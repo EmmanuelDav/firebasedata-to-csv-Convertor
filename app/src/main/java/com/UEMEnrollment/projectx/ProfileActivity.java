@@ -1,4 +1,4 @@
-package com.example.projectx;
+package com.UEMEnrollment.projectx;
 
 import android.content.Intent;
 import android.os.Bundle;

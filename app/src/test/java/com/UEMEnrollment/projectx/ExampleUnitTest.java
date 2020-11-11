@@ -1,4 +1,4 @@
-package com.example.projectx;
+package com.UEMEnrollment.projectx;
 
 import org.junit.Test;
 

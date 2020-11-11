@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UEM Enrolment</string>
+    <string name="app_name">Admin UEM Enrolment</string>
 
     <string-array name="LoginType">
         <item>User</item>

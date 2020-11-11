@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:412368153945:android:8a599571f114443840b048",
+        "android_client_info": {
+          "package_name": "com.UEMEnrollment.projectx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "412368153945-3uhml9t77t45aui10aq2o6ao2kfmqg88.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_lZwwtqDPGRA9HRvxzKN0vwlrTuLulpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "412368153945-3uhml9t77t45aui10aq2o6ao2kfmqg88.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:412368153945:android:76edfbc188894fdd40b048",
         "android_client_info": {
           "package_name": "com.example.projectx"

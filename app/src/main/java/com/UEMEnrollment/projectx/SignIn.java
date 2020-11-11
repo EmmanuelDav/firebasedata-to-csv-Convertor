@@ -1,4 +1,4 @@
-package com.example.projectx;
+package com.UEMEnrollment.projectx;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -87,11 +87,7 @@ public class SignIn extends AppCompatActivity {
                                             }
                                             if (x == 0) {
                                                 progressDialog.dismiss();
-                                                Toast.makeText(SignIn.this, "User SignUp Successful", Toast.LENGTH_SHORT).show();
-                                                Intent i1 = new Intent(SignIn.this, ProfileActivity.class);
-                                                i1.putExtra("Username", email);
-                                                startActivity(i1);
-                                                finish();
+                                                Toast.makeText(SignIn.this, "InValid Login", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 progressDialog.dismiss();
                                                 Intent i = new Intent(SignIn.this, ProfileActivity.class);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.projectx">
+    package="com.UEMEnrollment.projectx">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
@@ -11,13 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Details"></activity>
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".AdminActivity" />
-        <activity android:name=".UsersActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".SignIn">
+        <activity android:name="com.UEMEnrollment.projectx.Details"></activity>
+        <activity android:name="com.UEMEnrollment.projectx.ProfileActivity"></activity>
+        <activity android:name="com.UEMEnrollment.projectx.AdminActivity" />
+        <activity android:name="com.UEMEnrollment.projectx.UsersActivity" />
+        <activity android:name="com.UEMEnrollment.projectx.MainActivity" />
+        <activity android:name="com.UEMEnrollment.projectx.SignUp" />
+        <activity android:name="com.UEMEnrollment.projectx.SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

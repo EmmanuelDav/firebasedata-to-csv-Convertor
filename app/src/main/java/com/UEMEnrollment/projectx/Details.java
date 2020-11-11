@@ -1,9 +1,8 @@
-package com.example.projectx;
+package com.UEMEnrollment.projectx;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -16,7 +15,6 @@ import androidx.core.content.ContextCompat;
 
 import com.opencsv.CSVWriter;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
