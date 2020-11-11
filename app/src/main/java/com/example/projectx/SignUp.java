@@ -2,6 +2,8 @@ package com.example.projectx;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,10 +28,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
-    EditText mName, mEmail, mPassword, mSerialNum, mPhoneNum, mLocation;
+    EditText mName, mEmail, mPassword, retPasword, mPhoneNum, mLocation;
     FirebaseAuth mAuth;
     Button mSignUpButton;
-    Spinner mUserSpinner;
+    Spinner nLocation;
     AlertDialog.Builder builder;
     boolean isAdmin = false;
     AlertDialog progressDialog;
@@ -41,12 +44,11 @@ public class SignUp extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         mName = findViewById(R.id.namee);
         mEmail = findViewById(R.id.mail);
+       retPasword = findViewById(R.id.checkPassword);
         mPassword = findViewById(R.id.rpassword);
-        mSerialNum = findViewById(R.id.serialNum);
         mPhoneNum = findViewById(R.id.phoneNum);
-        mLocation = findViewById(R.id.mLocation);
+        nLocation = findViewById(R.id.mLocation);
         mSignUpButton = findViewById(R.id.signup);
-        mUserSpinner = findViewById(R.id.Atype);
         mAuth = FirebaseAuth.getInstance();
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,14 +57,17 @@ public class SignUp extends AppCompatActivity {
                 String password = mPassword.getText().toString().trim();
                 final String name = mName.getText().toString();
                 final String phoneN = mPhoneNum.getText().toString();
-                final String location = mLocation.getText().toString();
-                final String seNum = mSerialNum.getText().toString();
+                final String location = nLocation.getSelectedItem().toString();
+                final String rtPassword = retPasword.getText().toString();
                 if (!isAdmin) {
                     progressDialog.show();
-                    if (mail.isEmpty() || password.isEmpty() || name.isEmpty() || phoneN.isEmpty() || location.isEmpty()) {
+                    if (mail.isEmpty() || password.isEmpty() || name.isEmpty() || phoneN.isEmpty() || location.isEmpty() || rtPassword.isEmpty()) {
                         progressDialog.dismiss();
                         Toast.makeText(SignUp.this, "Blank Field Found", Toast.LENGTH_LONG).show();
-                    } else {
+                    } else if (!password.equals(rtPassword)){
+                        progressDialog.dismiss();
+                        Toast.makeText(SignUp.this, "passwords Don't Match", Toast.LENGTH_LONG).show();
+                    }else {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         db.collection("Users").whereEqualTo("Username", mail).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -80,20 +85,14 @@ public class SignUp extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> pTask) {
                                 if (pTask.isSuccessful()) {
-                                    String User = "User";
-                                    String userType = mUserSpinner.getSelectedItem().toString();
-                                    if (userType.equals("Hostel Owner")) {
-                                        User = "Owner";
-                                    }
                                     Map<String, String> user = new HashMap<>();
                                     user.put("Name", name);
                                     user.put("email", mail);
                                     user.put("AccountType", "User");
                                     user.put("location", location);
                                     user.put("phoneN", phoneN);
-                                    user.put("serialNum", seNum);
                                     FirebaseFirestore database = FirebaseFirestore.getInstance();
-                                    database.collection("Users").document(name).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    database.collection("Users").document(mail).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             progressDialog.dismiss();
@@ -154,7 +153,6 @@ public class SignUp extends AppCompatActivity {
             public boolean onLongClick(View pView) {
                 isAdmin = true;
                 mName.setVisibility(View.GONE);
-                mSerialNum.setVisibility(View.GONE);
                 mPhoneNum.setVisibility(View.GONE);
                 mLocation.setVisibility(View.GONE);
                 findViewById(R.id.admin).setVisibility(View.VISIBLE);

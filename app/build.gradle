@@ -42,8 +42,14 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:18.0.0'
     implementation 'com.google.firebase:firebase-firestore:22.0.0'
     //noinspection GradleCompatible
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

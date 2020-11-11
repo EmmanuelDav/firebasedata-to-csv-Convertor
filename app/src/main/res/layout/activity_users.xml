@@ -7,8 +7,20 @@
     android:orientation="vertical"
     tools:context=".UsersActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/backGround"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        app:title="@string/app_name">
+
+    </androidx.appcompat.widget.Toolbar>
+
+
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_below="@id/toolbar"
         android:layout_height="match_parent">
 
         <LinearLayout

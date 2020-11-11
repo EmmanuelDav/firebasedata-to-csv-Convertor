@@ -1,19 +1,24 @@
 package com.example.projectx;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +52,8 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         checkLocationPermission();
         mRecyclerView = findViewById(R.id.recyclerView);
         mDemiClassArrayList = new ArrayList<>();
@@ -83,7 +90,6 @@ public class AdminActivity extends AppCompatActivity {
         findViewById(R.id.saveTocsv).setOnClickListener(view -> {
             writeCSVFile(csv, mDemiClassArrayList);
         });
-        populateDataFromFirebase();
     }
 
     public boolean checkLocationPermission() {
@@ -109,6 +115,7 @@ public class AdminActivity extends AppCompatActivity {
                 }
                 return;
             }
+
         }
     }
 
@@ -133,7 +140,7 @@ public class AdminActivity extends AppCompatActivity {
             for (UserInfo aBook : listBooks) {
                 beanWriter.write(aBook, header, processors);
             }
-            Toast.makeText(AdminActivity.this, "Created Successfully ", Toast.LENGTH_LONG).show();
+            Toast.makeText(AdminActivity.this, "File saved in Internal Storage ", Toast.LENGTH_LONG).show();
         } catch (IOException ex) {
             System.err.println("Created Successfully " + ex);
             Toast.makeText(AdminActivity.this, "Failed  ", Toast.LENGTH_LONG).show();
@@ -148,24 +155,25 @@ public class AdminActivity extends AppCompatActivity {
         }
     }
 
-    private void populateDataFromFirebase() {
-        mDatabaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot sDataSnapshot : snapshot.getChildren()) {
-                    String data = sDataSnapshot.child("TradePartner_Selection").getValue(String.class);
-                }
-                Toast.makeText(AdminActivity.this,"Added",Toast.LENGTH_LONG).show();
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Signout: {
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
+                Intent i = new Intent(this, SignIn.class);
+                startActivity(i);
+                finish();
+                break;
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-      });
-//        mTradePartners.setThreshold(2);
-//        mTradePartners.setAdapter(mAdapter);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return  true;
+    }
 
 }

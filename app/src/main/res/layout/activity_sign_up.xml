@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SignUp">
+
+
 
 
     <TextView
@@ -26,22 +29,6 @@
         android:gravity="bottom"
         android:padding="15dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/serialNum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginTop="50dp"
-                android:ems="10"
-                android:hint="Serial Number"
-                android:inputType="text"
-                android:textColor="#000" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -71,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:hint=" Email-id"
+                android:hint=" Email"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="0dp"
                 android:textColor="#000"
@@ -95,9 +82,7 @@
                 android:inputType="number"
                 android:paddingLeft="0dp"
                 android:textColor="#000"
-                android:textColorHint="#999"
-
-                />
+                android:textColorHint="#999" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,13 +98,11 @@
                 android:layout_marginTop="10dp"
                 android:drawablePadding="5dp"
                 android:ems="10"
-                android:hint=" Retype Password( atleast 6 characters)"
+                android:hint="type Password( atleast 6 characters)"
                 android:inputType="textPassword"
                 android:paddingLeft="0dp"
                 android:textColor="#000"
-                android:textColorHint="#999"
-
-                />
+                android:textColorHint="#999" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,44 +111,41 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/mLocation"
+                android:id="@+id/checkPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
                 android:drawablePadding="5dp"
                 android:ems="10"
-                android:hint=" Location :"
-                android:inputType="text"
+                android:hint=" Retype Password"
+                android:inputType="textPassword"
                 android:paddingLeft="0dp"
                 android:textColor="#000"
-                android:textColorHint="#999"
-
-                />
+                android:textColorHint="#999" />
 
         </com.google.android.material.textfield.TextInputLayout>
-        <!--        android:drawableLeft="@mipmap/lock"-->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:id="@+id/layout"
-            android:visibility="gone"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="Type Of User"
+                android:text="Location"
                 android:textColor="#000"
                 android:textSize="18sp"/>
 
             <Spinner
-                android:id="@+id/Atype"
+                android:id="@+id/mLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:entries="@array/LoginType"/>
+                android:entries="@array/states" />
         </LinearLayout>
 
         <Button
@@ -181,6 +161,4 @@
             android:text="SignUp" />
 
     </LinearLayout>
-
-
 </RelativeLayout>

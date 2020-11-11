@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -13,11 +15,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +33,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 
 public class UsersActivity extends AppCompatActivity {
-    String username;
     EditText mSerialN, mDeviceID, mDeviceAuthEmail, mIMEI, mComments;
     AutoCompleteTextView mTradePartners;
     Spinner mState, mStatus;
@@ -41,8 +44,9 @@ public class UsersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         Intent mIntent = getIntent();
-        username = (String) mIntent.getSerializableExtra("Username");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         mSerialN = findViewById(R.id.sn);
         mDeviceID = findViewById(R.id.Did);
@@ -67,33 +71,39 @@ public class UsersActivity extends AppCompatActivity {
                 String state = mState.getSelectedItem().toString();
                 String status = mStatus.getSelectedItem().toString();
                 final FirebaseFirestore db = FirebaseFirestore.getInstance();
-                HashMap<String, String> map = new HashMap<>();
-                map.put("deviceId", deviceId);
-                map.put("serialNum", serialNum);
-                map.put("device Alt ID", deviceAE);
-                map.put("miMEI", miMEI);
-                map.put("comment", comment);
-                map.put("tradePartners", tradeP);
-                map.put("status", status);
-                map.put("state", state);
-                map.put("username", username);
-                db.collection("data").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> pTask) {
-                        mSerialN.setText("");
-                        mDeviceID.setText("");
-                        mDeviceAuthEmail.setText("");
-                        mIMEI.setText("");
-                        mComments.setText("");
-                        mTradePartners.setText("");
-                        Toast.makeText(UsersActivity.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception pE) {
+                if (serialNum.isEmpty() || deviceAE.isEmpty() || miMEI.isEmpty() || comment.isEmpty() || state.isEmpty() || status.isEmpty()) {
+                    Toast.makeText(UsersActivity.this, "Empty blank found", Toast.LENGTH_LONG).show();
+                } else {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("deviceId", deviceId);
+                    map.put("serialNum", serialNum);
+                    map.put("device Alt ID", deviceAE);
+                    map.put("miMEI", miMEI);
+                    map.put("comment", comment);
+                    map.put("tradePartners", tradeP);
+                    map.put("status", status);
+                    map.put("state", state);
+                    map.put("username", SignIn.username);
+                    map.put("Date", SignIn.date);
+                    db.collection("data").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> pTask) {
+                            mSerialN.setText("");
+                            mDeviceID.setText("");
+                            mDeviceAuthEmail.setText("");
+                            mIMEI.setText("");
+                            mComments.setText("");
+                            mTradePartners.setText("");
+                            Toast.makeText(UsersActivity.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception pE) {
 
-                    }
-                });
+                        }
+                    });
+                }
+
 
             }
         });
@@ -101,7 +111,6 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     private void populateDataFromFirebase() {
-
 
     }
 
@@ -113,7 +122,7 @@ public class UsersActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot sDataSnapshot : snapshot.getChildren()) {
-                        String data = sDataSnapshot.child("TradePartner_Selection").getValue(String.class);
+                        String data = sDataSnapshot.child("Partner Name").getValue(String.class);
                         mAdapter.add(data);
                     }
                     Log.d("TAG","BackGround Thread Active");
@@ -132,9 +141,36 @@ public class UsersActivity extends AppCompatActivity {
         protected void onPostExecute(Void pVoid) {
             mTradePartners.setThreshold(3);
             mTradePartners.setAdapter(mAdapter);
-            mTradePartners.setTextSize(18);
+            mTradePartners.setTextSize(14);
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Signout:
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
+                Intent i = new Intent(this, SignIn.class);
+                startActivity(i);
+                finish();
+                break;
 
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent sIntent = new Intent(this, ProfileActivity.class);
+        sIntent.putExtra("Username", SignIn.username);
+        finish();
+        super.onBackPressed();
+    }
 }
