@@ -2,13 +2,18 @@ package com.UEMEnrollment.projectx;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,7 +38,8 @@ public class ProfileActivity extends AppCompatActivity {
         Intent mIntent = getIntent();
         username = (String) mIntent.getSerializableExtra("Username");
         mName = findViewById(R.id.username);
-
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         totalPush = findViewById(R.id.flag_score);
         mEmail = findViewById(R.id.email);
         mFirebaseFirestore = FirebaseFirestore.getInstance();
@@ -82,5 +88,25 @@ public class ProfileActivity extends AppCompatActivity {
             builder.setView(R.layout.dialog);
         }
         return builder;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Signout: {
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
+                Intent i = new Intent(this, SignIn.class);
+                startActivity(i);
+                finish();
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return  true;
     }
 }

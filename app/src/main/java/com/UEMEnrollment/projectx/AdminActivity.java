@@ -42,6 +42,7 @@ public class AdminActivity extends AppCompatActivity {
     Adapter mAdapter;
     FirebaseFirestore mFirebaseFirestore;
     RecyclerView mRecyclerView;
+    boolean isPermissionGranted = false;
     String csv;
     DatabaseReference mDatabaseRef;
 
@@ -49,8 +50,9 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+        if (!isPermissionGranted) {
+            checkLocationPermission();
+        }
         checkLocationPermission();
         mRecyclerView = findViewById(R.id.recyclerView);
         mDemiClassArrayList = new ArrayList<>();
@@ -91,7 +93,8 @@ public class AdminActivity extends AppCompatActivity {
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_LOCATION);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
             return false;
         } else {
             return true;
@@ -104,7 +107,7 @@ public class AdminActivity extends AppCompatActivity {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
+                        isPermissionGranted = true;
                     }
                 } else {
                     Toast.makeText(this, "permission denied",
@@ -152,26 +155,7 @@ public class AdminActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.Signout: {
-                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                firebaseAuth.signOut();
-                Intent i = new Intent(this, SignIn.class);
-                startActivity(i);
-                finish();
-                break;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return  true;
-    }
     @Override
     public void onBackPressed() {
         Intent sIntent = new Intent(this, ProfileActivity.class);

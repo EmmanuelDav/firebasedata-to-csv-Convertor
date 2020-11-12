@@ -3,8 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/backGround"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        app:title="@string/app_name">
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -117,7 +128,7 @@
         android:layout_margin="20dp"
         android:id="@+id/AddItems"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         android:textColor="@color/backGround"
         android:text="View All Credentials" />
 
