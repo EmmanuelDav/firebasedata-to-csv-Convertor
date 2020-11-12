@@ -21,6 +21,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_below="@id/toolbar"
+
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -186,7 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp"
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@color/colorPrimary"
                 app:cardCornerRadius="5dp">
 
                 <TextView

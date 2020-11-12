@@ -42,7 +42,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
         holder.mState.setText("State = " + e.state);
         holder.mStatus.setText("Status = " + e.status);
         holder.mName.setText(e.username);
-        holder.mSerialN.setText("Serial Num "+(position + 1) + ".  " +e.getSerialNum());
+        holder.mSerialN.setText((position + 1)+". Serial Num = " +e.getSerialNum());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View pView) {

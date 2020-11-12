@@ -12,11 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Details"></activity>
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity"
+            android:launchMode="singleTask"></activity>
         <activity android:name=".AdminActivity" />
         <activity android:name=".UsersActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".SignUp" />
+        <activity android:name=".SignUp"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

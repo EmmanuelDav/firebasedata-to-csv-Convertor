@@ -170,6 +170,7 @@ public class UsersActivity extends AppCompatActivity {
                 sIntent.putExtra("Username", SignIn.username);
                 startActivity(sIntent);
                 finish();
+               break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -182,6 +183,7 @@ public class UsersActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent sIntent = new Intent(this, ProfileActivity.class);
         sIntent.putExtra("Username", SignIn.username);
         startActivity(sIntent);

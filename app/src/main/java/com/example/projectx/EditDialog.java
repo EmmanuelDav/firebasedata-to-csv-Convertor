@@ -2,9 +2,16 @@ package com.example.projectx;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,6 +26,11 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -31,21 +43,21 @@ public class EditDialog extends DialogFragment {
     CardView mSubmitButton;
     AlertDialog progressDialog;
     AlertDialog.Builder builder;
+    DatabaseReference mDatabaseRef;
     getEditedData info;
+    private ArrayAdapter<String> mAdapterData;
+    public EditDialog() {}
 
-
-    public EditDialog() {
-    }
-
-    public interface getEditedData {
+    public interface getEditedData
+    {
         void refresh();
     }
-
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Bundle sBundle = getArguments();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         assert sBundle != null;
         comment = sBundle.getString("comment");
         deviceId = sBundle.getString("Device Id");
@@ -72,7 +84,9 @@ public class EditDialog extends DialogFragment {
         mComments.setText(comment);
         mSerialN.setText(srN);
         mTradePartners.setText(tradeP);
+        mAdapterData = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_item);
         mSubmitButton = dialogView.findViewById(R.id.SUBMIT);
+        tradPartnersInfo();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Edit Record");
         alertDialogBuilder.setView(dialogView);
@@ -121,6 +135,12 @@ public class EditDialog extends DialogFragment {
                 }
             }
         });
+        alertDialogBuilder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface pDialogInterface, int pI) {
+                getDialog().dismiss();
+            }
+        });
         return alertDialogBuilder.create();
     }
 
@@ -148,4 +168,26 @@ public class EditDialog extends DialogFragment {
             info = (getEditedData) sProfileActivity;
         }
     }
+    private void tradPartnersInfo() {
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot sDataSnapshot : snapshot.getChildren()) {
+                    String data = sDataSnapshot.child("Partner Name").getValue(String.class);
+                    mAdapterData.add(data);
+                }
+                Log.d("TAG", "BackGround Thread Active");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        mTradePartners.setThreshold(3);
+        mTradePartners.setAdapter(mAdapterData);
+        mTradePartners.setTextSize(14);
+
+    }
+
 }

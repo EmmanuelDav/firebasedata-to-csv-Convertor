@@ -1,18 +1,29 @@
 package com.example.projectx;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -20,7 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileActivity extends AppCompatActivity  implements EditDialog.getEditedData{
+public class ProfileActivity extends AppCompatActivity implements EditDialog.getEditedData {
     FirebaseFirestore mFirebaseFirestore;
     String username;
     TextView mName, mEmail, mLocation, totalPush, totalPushPerUsers;
@@ -39,6 +50,9 @@ public class ProfileActivity extends AppCompatActivity  implements EditDialog.ge
         progressDialog = getDialogProgressBar().create();
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         mRecyclerView = findViewById(R.id.itemRecyclerview);
         mDemiClassArrayList = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -50,25 +64,29 @@ public class ProfileActivity extends AppCompatActivity  implements EditDialog.ge
         mEmail = findViewById(R.id.email);
         mLocation = findViewById(R.id.mLocation);
         mFirebaseFirestore = FirebaseFirestore.getInstance();
-        mFirebaseFirestore.collection("Users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot pDocumentSnapshot) {
-                progressDialog.dismiss();
-                if (pDocumentSnapshot != null) {
-                    String name = pDocumentSnapshot.get("Name").toString();
-                    String email = pDocumentSnapshot.get("email").toString();
-                    String Location = pDocumentSnapshot.get("location").toString();
-                    mEmail.setText(email);
-                    mName.setText(name);
-                    mLocation.setText(Location);
-                }
-            }
-        });
+        mFirebaseFirestore.collection("Users").document(username).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot pDocumentSnapshot) {
+                        progressDialog.dismiss();
+                        if (pDocumentSnapshot != null) {
+                            String name = pDocumentSnapshot.get("Name").toString();
+                            String email = pDocumentSnapshot.get("email").toString();
+                            String Location = pDocumentSnapshot.get("location").toString();
+                            mEmail.setText(email);
+                            mName.setText(name);
+                            mLocation.setText(Location);
+                        }
+                    }
+                });
         retrieveInfoFromfirebaseWithUserQuery();
         findViewById(R.id.AddItems).setOnClickListener(view -> {
-            startActivity(new Intent(this, UsersActivity.class));
+            Intent detailsIntent = new Intent(this, UsersActivity.class);
+            detailsIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(detailsIntent);
             finish();
         });
+
     }
 
     private void retrieveInfoFromfirebaseWithUserQuery() {
@@ -164,4 +182,25 @@ public class ProfileActivity extends AppCompatActivity  implements EditDialog.ge
         });
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Signout:
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
+                Intent i = new Intent(this, SignIn.class);
+                startActivity(i);
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
 }

@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Details">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         app:cardCornerRadius="5dp"
+        android:backgroundTint="@color/backGround"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -26,7 +26,8 @@
                 android:layout_margin="5dp"
                 android:fontFamily="@font/calibri"
                 android:gravity="center"
-                android:text="All Your Submission, Click to edit Them"
+                android:textColor="#000"
+                android:text="Email"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -35,7 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textStyle="bold"
                 android:text="Serial Number"
                 android:textSize="18sp" />
 

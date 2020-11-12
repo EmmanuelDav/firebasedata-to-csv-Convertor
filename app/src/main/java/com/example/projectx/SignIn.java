@@ -52,6 +52,7 @@ public class SignIn extends AppCompatActivity {
             Log.d("TAG","email ="+mFirebaseUser.getEmail());
             username = mFirebaseUser.getEmail();
             startActivity(mIntent);
+            finish();
         }
         super.onStart();
     }

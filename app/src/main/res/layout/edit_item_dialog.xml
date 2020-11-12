@@ -180,7 +180,8 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Edit"
+                    android:textAllCaps="true"
+                    android:text="UPdate"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
