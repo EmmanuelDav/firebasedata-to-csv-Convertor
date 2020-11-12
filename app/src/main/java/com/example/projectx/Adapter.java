@@ -1,13 +1,14 @@
 package com.example.projectx;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -15,10 +16,12 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
     private Context context;
     public List<UserInfo> entryList;
+    FragmentManager mFragmentManager;
 
-    public Adapter(Context pContext, List<UserInfo> pEntryList) {
+    public Adapter(Context pContext, List<UserInfo> pEntryList, FragmentManager pFragmentManager) {
         context = pContext;
         entryList = pEntryList;
+        mFragmentManager = pFragmentManager;
     }
 
     @NonNull
@@ -31,15 +34,34 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final viewHolder holder, int position) {
         final UserInfo e = entryList.get(position);
-        holder.mComments.setText("Comment = "+e.comment);
-        holder.mDeviceAuthEmail.setText("Device Alt Email = "+e.deviceAltEmail);
-        holder.mIMEI.setText("IMEI = "+e.miMEI);
-        holder.mDeviceID.setText("Device Id = "+e.deviceId);
-        holder.mTradePartners.setText("Trade Partners = "+e.tradePartners);
-        holder.mState.setText("State = "+e.state);
-        holder.mStatus.setText("Status = "+e.status);
+        holder.mComments.setText("Comment = " + e.comment);
+        holder.mDeviceAuthEmail.setText("Device Alt Email = " + e.deviceAltEmail);
+        holder.mIMEI.setText("IMEI = " + e.miMEI);
+        holder.mDeviceID.setText("Device Id = " + e.deviceId);
+        holder.mTradePartners.setText("Trade Partners = " + e.tradePartners);
+        holder.mState.setText("State = " + e.state);
+        holder.mStatus.setText("Status = " + e.status);
         holder.mName.setText(e.username);
-        holder.mSerialN.setText((position + 1) + ".");
+        holder.mSerialN.setText("Serial Num "+(position + 1) + ".  " +e.getSerialNum());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View pView) {
+                int p = holder.getAdapterPosition();
+                Bundle sBundle = new Bundle();
+                sBundle.putString("comment", entryList.get(p).getComment());
+                sBundle.putString("DeviceEmail", entryList.get(p).getDeviceAltEmail());
+                sBundle.putString("Imei", entryList.get(p).getMiMEI());
+                sBundle.putString("Device Id", entryList.get(p).getDeviceId());
+                sBundle.putString("TradeP", entryList.get(p).getTradePartners());
+                sBundle.putString("Status", entryList.get(p).getStatus());
+                sBundle.putString("State", entryList.get(p).getState());
+                sBundle.putString("Key", entryList.get(p).getKey());
+                sBundle.putString("SrN", entryList.get(p).getSerialNum());
+                EditDialog sEditDialog = new EditDialog();
+                sEditDialog.setArguments(sBundle);
+                sEditDialog.show(mFragmentManager, "edit Fragment");
+            }
+        });
 
     }
 

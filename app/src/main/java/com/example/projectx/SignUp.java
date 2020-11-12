@@ -2,8 +2,6 @@ package com.example.projectx;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,7 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +55,6 @@ public class SignUp extends AppCompatActivity {
                 final String phoneN = mPhoneNum.getText().toString();
                 final String location = nLocation.getSelectedItem().toString();
                 final String rtPassword = retPasword.getText().toString();
-                if (!isAdmin) {
                     progressDialog.show();
                     if (mail.isEmpty() || password.isEmpty() || name.isEmpty() || phoneN.isEmpty() || location.isEmpty() || rtPassword.isEmpty()) {
                         progressDialog.dismiss();
@@ -68,7 +63,6 @@ public class SignUp extends AppCompatActivity {
                         progressDialog.dismiss();
                         Toast.makeText(SignUp.this, "passwords Don't Match", Toast.LENGTH_LONG).show();
                     }else {
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
                         mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> pTask) {
@@ -107,45 +101,7 @@ public class SignUp extends AppCompatActivity {
                             }
                         });
                     }
-                }else {
-                    progressDialog.show();
-                    if (mail.isEmpty() || password.isEmpty()){
-                        progressDialog.dismiss();
-                        Toast.makeText(SignUp.this, "Missing Field Found", Toast.LENGTH_LONG).show();
-                    }else {
-                        mAuth.createUserWithEmailAndPassword(mail,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult pAuthResult) {
-                                FirebaseFirestore database = FirebaseFirestore.getInstance();
-                                Map<String, String> user = new HashMap<>();
-                                user.put("email", mail);
-                                user.put("AccountType", "Admin");
-                                database.collection("Users").document(mail).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void pVoid) {
-                                        progressDialog.dismiss();
-                                        Toast.makeText(SignUp.this, "Admin  SignUp Successful", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(SignUp.this, SignIn.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }
-            }
-        });
-        mSignUpButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View pView) {
-                isAdmin = true;
-                mName.setVisibility(View.GONE);
-                mPhoneNum.setVisibility(View.GONE);
-                mLocation.setVisibility(View.GONE);
-                findViewById(R.id.admin).setVisibility(View.VISIBLE);
-                findViewById(R.id.layout).setVisibility(View.GONE);
-                return false;
+
             }
         });
     }

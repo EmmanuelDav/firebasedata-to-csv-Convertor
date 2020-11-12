@@ -101,7 +101,9 @@ public class UsersActivity extends AppCompatActivity {
                             mIMEI.setText("");
                             mComments.setText("");
                             mTradePartners.setText("");
+                            mSerialN.requestFocus();
                             Toast.makeText(UsersActivity.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

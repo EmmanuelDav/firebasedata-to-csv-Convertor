@@ -67,7 +67,7 @@ public class AdminActivity extends AppCompatActivity {
                 List<DocumentSnapshot> li;
                 li = pQueryDocumentSnapshots.getDocuments();
                 if (!pQueryDocumentSnapshots.isEmpty()) {
-                    String name = "", serialN = "", deviceId = "", state = "", status = "", comment = "", tradeP = "", imei = "", deviceAltEmail = "";
+                    String name = "", serialN = "", deviceId = "", state = "", status = "", comment = "", tradeP = "", imei = "", deviceAltEmail = "", key ="";
                     for (DocumentSnapshot i : li) {
                         if (i.exists()) {
                             name = (String) i.get("username");
@@ -79,8 +79,9 @@ public class AdminActivity extends AppCompatActivity {
                             imei = (String) i.get("miMEI");
                             deviceAltEmail = (String) i.get("device Alt ID");
                             status = (String) i.get("status");
-                            mDemiClassArrayList.add(new UserInfo(serialN, deviceId, deviceAltEmail, imei, comment, tradeP, state, status, name));
-                            mAdapter = new Adapter(AdminActivity.this, mDemiClassArrayList);
+                            key =(String) i.getId();
+                            mDemiClassArrayList.add(new UserInfo(serialN, deviceId, deviceAltEmail, imei, comment, tradeP, state, status, name,key));
+                            mAdapter = new Adapter(AdminActivity.this, mDemiClassArrayList,getSupportFragmentManager());
                             mRecyclerView.setAdapter(mAdapter);
                         }
                     }

@@ -50,6 +50,7 @@ public class SignIn extends AppCompatActivity {
             Intent mIntent = new Intent(this, ProfileActivity.class);
             mIntent.putExtra("Username", mFirebaseUser.getEmail());
             Log.d("TAG","email ="+mFirebaseUser.getEmail());
+            username = mFirebaseUser.getEmail();
             startActivity(mIntent);
         }
         super.onStart();

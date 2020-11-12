@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
     android:orientation="vertical">
 
@@ -153,7 +154,25 @@
         android:layout_height="wrap_content"
         android:text="Add Credentials"
         android:textColor="@color/backGround"
-        android:background="@color/colorAccent"/>
+        android:background="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:fontFamily="@font/calibri"
+        android:gravity="center"
+        android:text="All Your Submission, Click to edit Them"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemRecyclerview"
+        tools:listitem="@layout/activity_details" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

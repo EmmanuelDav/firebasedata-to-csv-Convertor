@@ -12,6 +12,7 @@ public class UserInfo implements Serializable {
     String state;
     String status;
     String username;
+    String key;
 
     public UserInfo() {}
 
@@ -26,6 +27,19 @@ public class UserInfo implements Serializable {
         state = pState;
         status = pStatus;
         username = pUsername;
+    }
+
+    public UserInfo(String pSerialNum, String pDeviceId, String pDeviceAltEmail, String pMiMEI, String pComment, String pTradePartners, String pState, String pStatus, String pUsername, String pKey) {
+        serialNum = pSerialNum;
+        deviceId = pDeviceId;
+        deviceAltEmail = pDeviceAltEmail;
+        miMEI = pMiMEI;
+        comment = pComment;
+        tradePartners = pTradePartners;
+        state = pState;
+        status = pStatus;
+        username = pUsername;
+        key = pKey;
     }
 
     public String getSerialNum() {
@@ -98,5 +112,13 @@ public class UserInfo implements Serializable {
 
     public void setUsername(String pUsername) {
         username = pUsername;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String pKey) {
+        key = pKey;
     }
 }
